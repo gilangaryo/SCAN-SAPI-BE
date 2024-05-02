@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const supabase = require('@supabase/supabase-js');
 const app = express();
 const PORT = 4000;
