@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Data and Create Table</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Created At</th>
+                <th>UID</th>
+                <th>Nama</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+            <!-- Table body will be filled dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('https://postdata-gilangs-projects-7bfdc89d.vercel.app/')
+                .then(response => response.json())
+                .then(data => {
+                    // Check if data is available
+                    if (data && data.getData && data.getData.data) {
+                        const dataTable = document.getElementById('data-table');
+                        const tableBody = document.getElementById('table-body');
+
+                        // Iterate through the data and create table rows
+                        data.getData.data.forEach(item => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${item.id}</td>
+                                <td>${item.created_at}</td>
+                                <td>${item.uid}</td>
+                                <td>${item.nama}</td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                    } else {
+                        console.error('Error: Unable to fetch data or data format is incorrect.');
+                    }
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
+</body>
+
+</html>

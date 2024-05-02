@@ -8,6 +8,7 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 app.use(express.json());
+app.use(cors());
 app.get('/', async (req, res) => {
     const getData = await db.from("sapi").select();
     console.log(getData);
